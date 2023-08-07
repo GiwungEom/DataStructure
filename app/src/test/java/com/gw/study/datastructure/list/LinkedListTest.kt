@@ -9,18 +9,23 @@ class LinkedListTest {
     private val compare: (Int, Int) -> Int = { e1, e2 -> e1 - e2 }
     private lateinit var linkedList: GwLinkedList<Int>
     private lateinit var linkedListOrder: GwLinkedList<Int>
+    private lateinit var circularLinkedList: GwCircularLinkedList<Int>
+    private lateinit var doubleLinkedList: GwDoubleLinkedList<Int>
     private val dataSize = 10
 
     @Before
     fun initialize() {
         linkedList = GwLinkedList()
         linkedListOrder = GwLinkedList(compare)
+        circularLinkedList = GwCircularLinkedList()
+        doubleLinkedList = GwDoubleLinkedList()
         insertData()
     }
 
     private fun insertData(times: Int = dataSize) {
         repeat(times) {
             linkedList.insert(it)
+            doubleLinkedList.insert(it)
         }
     }
 
@@ -81,6 +86,89 @@ class LinkedListTest {
         repeat(dataSize) {
             if (it == 0) assertEquals(it, linkedListOrder.first())
             else assertEquals(it, linkedListOrder.next())
+        }
+    }
+
+    @Test
+    fun circularLinkedList_insertFront_equalsTrue() {
+        repeat(dataSize) {
+            circularLinkedList.insertFront(it)
+        }
+        var index = 0
+        repeat(dataSize) {
+            if (it == 0) assertEquals(((dataSize - 1) - index++), circularLinkedList.first())
+            else assertEquals(((dataSize - 1) - index++), circularLinkedList.next())
+        }
+    }
+
+    @Test
+    fun circularLinkedList_insertBackend_equalsTrue() {
+        repeat(dataSize) {
+            circularLinkedList.insertBackend(it)
+        }
+        repeat(dataSize) {
+            if (it == 0) assertEquals(it, circularLinkedList.first())
+            else assertEquals(it, circularLinkedList.next())
+        }
+    }
+
+    @Test
+    fun circularLinkedListInsertedBackend_remove_equalsTrue() {
+        repeat(dataSize) {
+            circularLinkedList.insertBackend(it)
+        }
+        repeat(dataSize) {
+            val removeData = if (it == 0) circularLinkedList.first()
+                             else circularLinkedList.next()
+            assertEquals(removeData, circularLinkedList.remove())
+        }
+    }
+
+    @Test
+    fun circularLinkedListInsertedFront_remove_equalsTrue() {
+        repeat(dataSize) {
+            circularLinkedList.insertFront(it)
+        }
+        repeat(dataSize) {
+            val removeData = if (it == 0) circularLinkedList.first()
+                             else circularLinkedList.next()
+            assertEquals(removeData, circularLinkedList.remove())
+        }
+    }
+
+    @Test
+    fun doubleLinkedList_numberOfData_equalsTrue() {
+        assertEquals(dataSize, doubleLinkedList.numberOfData)
+    }
+
+    @Test
+    fun doubleLinkedList_search_equalsTrue() {
+        repeat(dataSize) {
+            val data = if (it == 0) doubleLinkedList.first()
+                       else doubleLinkedList.next()
+
+            assertEquals(it, data)
+        }
+    }
+
+    @Test
+    fun doubleLinkedList_searchPreview_equalsTrue() {
+        repeat(dataSize) {
+            if (it == 0) doubleLinkedList.first()
+            else doubleLinkedList.next()
+        }
+        var index = 0
+        repeat(dataSize - 1) {
+            assertEquals(((dataSize - 2) - index++), doubleLinkedList.prev())
+        }
+    }
+
+    @Test
+    fun doubleLinkedList_remove_equalsTrue() {
+        repeat(dataSize) {
+            val removeData = if (it == 0) doubleLinkedList.first()
+            else doubleLinkedList.next()
+            assertEquals(removeData, doubleLinkedList.remove())
         }
     }
 }
