@@ -10,6 +10,7 @@ class LinkedListTest {
     private lateinit var linkedList: GwLinkedList<Int>
     private lateinit var linkedListOrder: GwLinkedList<Int>
     private lateinit var circularLinkedList: GwCircularLinkedList<Int>
+    private lateinit var doubleLinkedList: GwDoubleLinkedList<Int>
     private val dataSize = 10
 
     @Before
@@ -17,12 +18,14 @@ class LinkedListTest {
         linkedList = GwLinkedList()
         linkedListOrder = GwLinkedList(compare)
         circularLinkedList = GwCircularLinkedList()
+        doubleLinkedList = GwDoubleLinkedList()
         insertData()
     }
 
     private fun insertData(times: Int = dataSize) {
         repeat(times) {
             linkedList.insert(it)
+            doubleLinkedList.insert(it)
         }
     }
 
@@ -117,7 +120,7 @@ class LinkedListTest {
         repeat(dataSize) {
             val removeData = if (it == 0) circularLinkedList.first()
                              else circularLinkedList.next()
-            assertEquals(it, removeData)
+            assertEquals(removeData, circularLinkedList.remove())
         }
     }
 
@@ -126,12 +129,46 @@ class LinkedListTest {
         repeat(dataSize) {
             circularLinkedList.insertFront(it)
         }
-        var index = 0
         repeat(dataSize) {
             val removeData = if (it == 0) circularLinkedList.first()
                              else circularLinkedList.next()
-            assertEquals(((dataSize - 1) - index++), removeData)
+            assertEquals(removeData, circularLinkedList.remove())
         }
     }
 
+    @Test
+    fun doubleLinkedList_numberOfData_equalsTrue() {
+        assertEquals(dataSize, doubleLinkedList.numberOfData)
+    }
+
+    @Test
+    fun doubleLinkedList_search_equalsTrue() {
+        repeat(dataSize) {
+            val data = if (it == 0) doubleLinkedList.first()
+                       else doubleLinkedList.next()
+
+            assertEquals(it, data)
+        }
+    }
+
+    @Test
+    fun doubleLinkedList_searchPreview_equalsTrue() {
+        repeat(dataSize) {
+            if (it == 0) doubleLinkedList.first()
+            else doubleLinkedList.next()
+        }
+        var index = 0
+        repeat(dataSize - 1) {
+            assertEquals(((dataSize - 2) - index++), doubleLinkedList.prev())
+        }
+    }
+
+    @Test
+    fun doubleLinkedList_remove_equalsTrue() {
+        repeat(dataSize) {
+            val removeData = if (it == 0) doubleLinkedList.first()
+            else doubleLinkedList.next()
+            assertEquals(removeData, doubleLinkedList.remove())
+        }
+    }
 }
