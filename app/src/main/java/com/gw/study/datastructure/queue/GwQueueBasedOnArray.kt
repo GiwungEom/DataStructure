@@ -18,7 +18,7 @@ class GwQueueBasedOnArray<T>(
     override var numberOfData: Int = 0
         private set
 
-    private fun isEmpty(): Boolean = front == rear
+    override fun isEmpty(): Boolean = front == rear
 
     private fun isFull(): Boolean = getNextPos(rear) == front
 
