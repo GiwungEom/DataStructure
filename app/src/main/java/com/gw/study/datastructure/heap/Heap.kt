@@ -60,6 +60,9 @@ class GwHeap<T>(
     }
 
     @Suppress("UNCHECKED_CAST")
+    fun getData(index: Int): T? = array[index] as? T
+
+    @Suppress("UNCHECKED_CAST")
     private fun Int.getPriorChildIndex(): Int =
         if (leftChildIdx() > numberOfData) {
             0

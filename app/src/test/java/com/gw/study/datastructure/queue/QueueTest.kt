@@ -7,6 +7,8 @@ class QueueTest {
     private val queueSize = 10
     private val queueBasedOnArray: GwQueue<Int> by lazy { GwQueueBasedOnArray(queueSize + 1) }
     private val queueBasedOnLinkedList: GwQueue<Int> by lazy { GwQueueBasedOnLinkedList() }
+    private val queueBasedOnHeap: GwQueue<Int> by lazy { GwPriorityQueueBasedOnHeap { num1, num2 -> num2 - num1 } }
+
 
     private infix fun GwQueue<Int>.generateData(queueSize: Int) {
         repeat(queueSize) { enqueue(it) }
@@ -55,6 +57,28 @@ class QueueTest {
         repeat(queueSize) {
             assertEquals(it, queueBasedOnLinkedList.peek())
             queueBasedOnLinkedList.dequeue()
+        }
+    }
+    @Test
+    fun queueBasedOnHeap_enqueue_equalsTrue() {
+        queueBasedOnHeap generateData queueSize
+        assertEquals(queueSize, queueBasedOnHeap.numberOfData)
+    }
+
+    @Test
+    fun queueBasedOnHeap_dequeue_equalsTrue() {
+        queueBasedOnHeap generateData queueSize
+        repeat(queueSize) {
+            assertEquals(it, queueBasedOnHeap.dequeue())
+        }
+    }
+
+    @Test
+    fun queueBasedOnHeap_peek_equalsTrue() {
+        queueBasedOnHeap generateData queueSize
+        repeat(queueSize) {
+            assertEquals(it, queueBasedOnHeap.peek())
+            queueBasedOnHeap.dequeue()
         }
     }
 }
