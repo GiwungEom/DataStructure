@@ -7,14 +7,24 @@ import com.gw.study.datastructure.tree.GwBinaryTreeTraversal
  *  이진 탐색 트리
  *  부모 노드는 왼쪽 자식 노드 보다 크고, 오른쪽 자식노드 보다 작다.
  */
-data class Slot(var key: Int, var data: Int)
+
+interface IBinarySearchTree {
+    fun insert(key: Int, data: Int)
+
+    fun search(key: Int): Int?
+
+    fun remove(key: Int): Int?
+
+    fun traversal(action: (Slot) -> Unit)
+}
+
 class BinarySearchTree(
     private val binaryTreeTraversal: GwBinaryTreeTraversal<Slot> = GwBinaryTreeTraversal()
-) {
+) : IBinarySearchTree {
 
-    private var rootNode: GwBinaryTree<Slot>? = null
+    var rootNode: GwBinaryTree<Slot>? = null
 
-    fun insert(key: Int, data: Int) {
+    override fun insert(key: Int, data: Int) {
         val newBTree = GwBinaryTree(Slot(key = key, data = data))
 
 
@@ -44,7 +54,7 @@ class BinarySearchTree(
         }
     }
 
-    fun search(key: Int): Int? {
+    override fun search(key: Int): Int? {
 
         var cNode = rootNode
 
@@ -63,7 +73,7 @@ class BinarySearchTree(
         return null
     }
 
-    fun remove(key: Int): Int? {
+    override fun remove(key: Int): Int? {
 
         // 삭제 노드 찾기
         var delNode: GwBinaryTree<Slot>?
@@ -139,7 +149,11 @@ class BinarySearchTree(
         return delNode.data.data
     }
 
-    fun preOrderTraversal(action: (Slot) -> Unit) {
+    override fun traversal(action: (Slot) -> Unit) {
+        preOrderTraversal(action)
+    }
+
+    private fun preOrderTraversal(action: (Slot) -> Unit) {
         binaryTreeTraversal.preorderTraversal(rootNode, action = action)
     }
 }
