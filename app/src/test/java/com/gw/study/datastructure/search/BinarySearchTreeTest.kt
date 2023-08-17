@@ -11,7 +11,7 @@ import org.junit.Test
  */
 class BinarySearchTreeTest {
 
-    private lateinit var binarySearchTree: BinarySearchTree
+    private lateinit var binarySearchTree: IBinarySearchTree
     private val dataSize = 13
 
     @Before
@@ -39,7 +39,7 @@ class BinarySearchTreeTest {
             enqueue(105)
         }
 
-        binarySearchTree.preOrderTraversal {
+        binarySearchTree.traversal {
             assertEquals(resultQueue.dequeue(), it.key)
         }
     }
@@ -76,7 +76,7 @@ class BinarySearchTreeTest {
         binarySearchTree.remove(10)
 
         // 전체 데이터 검사
-        binarySearchTree.preOrderTraversal {
+        binarySearchTree.traversal {
             assertEquals(result.dequeue(), it.key)
         }
     }
@@ -100,7 +100,7 @@ class BinarySearchTreeTest {
         binarySearchTree.remove(20)
 
         // 전체 데이터 검사
-        binarySearchTree.preOrderTraversal {
+        binarySearchTree.traversal {
             assertEquals(result.dequeue(), it.key)
         }
     }
@@ -124,7 +124,7 @@ class BinarySearchTreeTest {
         binarySearchTree.remove(100)
 
         // 전체 데이터 검사
-        binarySearchTree.preOrderTraversal {
+        binarySearchTree.traversal {
             assertEquals(result.dequeue(), it.key)
         }
     }
@@ -149,7 +149,7 @@ class BinarySearchTreeTest {
         binarySearchTree.remove(30)
 
         // 전체 데이터 검사
-        binarySearchTree.preOrderTraversal {
+        binarySearchTree.traversal {
             assertEquals(result.dequeue(), it.key)
         }
     }
@@ -173,7 +173,7 @@ class BinarySearchTreeTest {
         binarySearchTree.remove(70)
 
         // 전체 데이터 검사
-        binarySearchTree.preOrderTraversal {
+        binarySearchTree.traversal {
             assertEquals(result.dequeue(), it.key)
         }
     }
@@ -198,7 +198,7 @@ class BinarySearchTreeTest {
         binarySearchTree.remove(50)
 
         // 전체 데이터 검사
-        binarySearchTree.preOrderTraversal {
+        binarySearchTree.traversal {
             assertEquals(result.dequeue(), it.key)
         }
     }

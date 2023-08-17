@@ -14,13 +14,15 @@ interface IBinarySearchTree {
     fun search(key: Int): Int?
 
     fun remove(key: Int): Int?
+
+    fun traversal(action: (Slot) -> Unit)
 }
 
 class BinarySearchTree(
     private val binaryTreeTraversal: GwBinaryTreeTraversal<Slot> = GwBinaryTreeTraversal()
 ) : IBinarySearchTree {
 
-    private var rootNode: GwBinaryTree<Slot>? = null
+    var rootNode: GwBinaryTree<Slot>? = null
 
     override fun insert(key: Int, data: Int) {
         val newBTree = GwBinaryTree(Slot(key = key, data = data))
@@ -147,7 +149,11 @@ class BinarySearchTree(
         return delNode.data.data
     }
 
-    fun preOrderTraversal(action: (Slot) -> Unit) {
+    override fun traversal(action: (Slot) -> Unit) {
+        preOrderTraversal(action)
+    }
+
+    private fun preOrderTraversal(action: (Slot) -> Unit) {
         binaryTreeTraversal.preorderTraversal(rootNode, action = action)
     }
 }
