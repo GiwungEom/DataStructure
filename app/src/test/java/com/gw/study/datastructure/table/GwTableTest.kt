@@ -6,7 +6,6 @@ import org.junit.Test
 
 class GwTableTest {
 
-    data class Employee(val empNum: Int, val name: String, val age: Int)
     private val table = GwSimpleTable<Int, Employee> { it % 100 }
     private val dataSize = 50
 

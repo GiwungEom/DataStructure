@@ -31,9 +31,9 @@ class GwSimpleTable<K, V>(
             if (it.status == SlotStatus.INUSE) {
                 it.value
             } else {
-                throw IllegalStateException("$key is Deleted")
+                throw Exception("$key is Deleted")
             }
-        } ?: throw IllegalStateException("Not Fount Key : $key")
+        } ?: throw Exception("Not Fount Key : $key")
     }
 
     override operator fun set(key: K, value: V) {
