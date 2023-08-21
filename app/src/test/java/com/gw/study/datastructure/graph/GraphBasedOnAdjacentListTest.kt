@@ -77,4 +77,45 @@ class GraphBasedOnAdjacentListTest {
             assertEquals(resultList[1].dequeue(), it)
         }
     }
+
+    @Test
+    fun graph_bfsVisit_equalsTrue() {
+        val resultList = listOf(
+            GwQueueBasedOnLinkedList<Vertex>().apply {
+                enqueue(Vertex.A)
+                enqueue(Vertex.B)
+                enqueue(Vertex.D)
+                enqueue(Vertex.C)
+                enqueue(Vertex.E)
+                enqueue(Vertex.F)
+                enqueue(Vertex.G)
+            },
+            GwQueueBasedOnLinkedList<Vertex>().apply {
+                enqueue(Vertex.C)
+                enqueue(Vertex.B)
+                enqueue(Vertex.D)
+                enqueue(Vertex.A)
+                enqueue(Vertex.E)
+                enqueue(Vertex.F)
+                enqueue(Vertex.G)
+            }
+        )
+
+        val graph = GraphBasedOnAdjacentList(Vertex.values().size)
+
+        graph.addEdge(Vertex.A, Vertex.B)
+        graph.addEdge(Vertex.A, Vertex.D)
+        graph.addEdge(Vertex.B, Vertex.C)
+        graph.addEdge(Vertex.D, Vertex.C)
+        graph.addEdge(Vertex.D, Vertex.E)
+        graph.addEdge(Vertex.E, Vertex.F)
+        graph.addEdge(Vertex.E, Vertex.G)
+
+        graph.visitBfsGraphVertex(Vertex.A) {
+            assertEquals(resultList[0].dequeue(), it)
+        }
+        graph.visitBfsGraphVertex(Vertex.C) {
+            assertEquals(resultList[1].dequeue(), it)
+        }
+    }
 }

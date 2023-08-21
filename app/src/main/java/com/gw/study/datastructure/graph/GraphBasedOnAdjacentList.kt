@@ -1,6 +1,7 @@
 package com.gw.study.datastructure.graph
 
 import com.gw.study.datastructure.list.GwLinkedList
+import com.gw.study.datastructure.queue.GwQueueBasedOnArray
 import com.gw.study.datastructure.stack.GwStackBasedOnArray
 
 /**
@@ -74,6 +75,41 @@ class GraphBasedOnAdjacentList(
                         break
                     }
                 }
+            }
+        }
+    }
+
+    // 넓이 우선 탐색
+    fun visitBfsGraphVertex(startVertex: Vertex, action: (vertex: Vertex) -> Unit) {
+        // 정점 방문 여부 체크
+        val vertexVisitCheck: Array<Vertex?> = Array(size = vertexNum) { null }
+        // 주변 정점 저장 큐
+        val vertexAround: GwQueueBasedOnArray<Vertex> = GwQueueBasedOnArray(vertexNum + 1)
+
+        var vertex = startVertex
+        var currentVertex = startVertex
+        vertexVisitCheck.add(startVertex)
+        action(startVertex)
+
+        while (array[vertex.ordinal].first()?.also { currentVertex = it } != null) {
+            if (vertexVisitCheck.find { it == currentVertex } == null) {
+                vertexVisitCheck.add(currentVertex)
+                vertexAround.enqueue(currentVertex)
+                action(currentVertex)
+            }
+
+            while (array[vertex.ordinal].next()?.also { currentVertex = it } != null) {
+                if (vertexVisitCheck.find { it == currentVertex } == null) {
+                    vertexVisitCheck.add(currentVertex)
+                    vertexAround.enqueue(currentVertex)
+                    action(currentVertex)
+                }
+            }
+
+            if (vertexAround.isEmpty()) {
+                break
+            } else {
+                vertex = vertexAround.dequeue()
             }
         }
     }
